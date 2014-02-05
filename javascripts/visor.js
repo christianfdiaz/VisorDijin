@@ -57,7 +57,7 @@ function init() {
         scalebarUnit: "metric"
     });
     //esri.arcgis.utils.getItem("4778fee6371d4e83a22786029f30c7e1").then(function (response) {
-    esri.arcgis.utils.getItem("4778fee6371d4e83a22786029f30c7e1").then(function (response) {
+    esri.arcgis.utils.getItem("a3947b2c7a2c4495a41df575250facb9").then(function (response) {
         dojo.map(response.itemData.operationalLayers, function (item) {
             var layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer(item.url, { opacity: item.opacity });
             mapa.addLayer(layerCuadrantes);
