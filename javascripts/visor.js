@@ -296,7 +296,7 @@ function showErrorAddress(err) {
 
 //Funtion to obtain parametres from URL
 function getUrlVars() {
-    var vars = {};
+    vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
     		function (m, key, value) {
     		    vars[key] = value;
@@ -367,7 +367,22 @@ function createSymbol(path, color) {
 //Function to send the coordenates to new page
 function onButtonOKClick() {
     //window.location="http://localhost:2020/delitos/formulario.html?"+strInformacion+"&"+getUrlVars();
-    window.location = "!pag_hechos.html?" + strInformacion + "&" + getUrlVars();
+    var va = getUrlVars();
+    var loc = "!pag_hechos.html?";
+    if(vars.redirect==null && vars.funct==null){
+    	window.location = loc + strInformacion + "&" + va;
+    }
+    if(vars.redirect!=null && vars.funct==null)
+    	loc = vars.redirect;
+    	window.location = loc + strInformacion + "&" + va;
+    }
+    if(vars.redirect==null && vars.funct!=null){
+    	window.opener[vars.funct](strInformacion + "&" + va);
+    }
+    if(vars.redirect!=null && vars.funct!=null){
+    	alert('Debe especificar Nombre o URL, no ambas');
+    }
+    
 }
 
 //Function to load the visor
