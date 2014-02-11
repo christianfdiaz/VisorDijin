@@ -378,6 +378,7 @@ function onButtonOKClick() {
     }
     if(vars.redirect==null && vars.funct!=null){
     	window.opener[vars.funct](strInformacion + "&" + va);
+    	window.close();
     }
     if(vars.redirect!=null && vars.funct!=null){
     	alert('Debe especificar Nombre o URL, no ambas');
