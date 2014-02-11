@@ -369,7 +369,7 @@ function onButtonOKClick() {
     //window.location="http://localhost:2020/delitos/formulario.html?"+strInformacion+"&"+getUrlVars();
     var va = getUrlVars();
     var loc = "!pag_hechos.html?";
-    if(vars.redirect==null && vars.funct==null){
+    /*if(vars.redirect==null && vars.funct==null){
     	window.location = loc + strInformacion + "&" + va;
     }
     if(vars.redirect!=null && vars.funct==null)
@@ -381,7 +381,7 @@ function onButtonOKClick() {
     }
     if(vars.redirect!=null && vars.funct!=null){
     	alert('Debe especificar Nombre o URL, no ambas');
-    }
+    }*/
     
 }
 
