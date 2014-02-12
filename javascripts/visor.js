@@ -147,7 +147,8 @@ function obtenerInformacionServicio() {
             }
             if (result.layerName === 'cuadrantes') {
                 numCuadrante = feature.attributes.CODIGO_SIEDCO;
-                strInformacion = "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
+				numCuadrante1 = feature.attributes.NRO_CUADRANTE;
+                strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
             }
         });
         dialog.hide();
