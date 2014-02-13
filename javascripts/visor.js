@@ -16,7 +16,7 @@ dojo.require("dijit.form.Slider");
 dojo.require("esri.arcgis.utils");
 dojo.require("dijit.Dialog");
 
-console.log("hola mundo");
+
 //Global variables
 var mapa, identifyTask, identifyParams;
 var number, registry, strAddress;
