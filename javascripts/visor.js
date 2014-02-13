@@ -46,6 +46,7 @@ function init() {
     baseMapGallery.startup();
 
     baseMapGallery.on("error", function (msg) {
+    	
         console.log("error en la galeria de mpas base: ", msg);
     });
 
