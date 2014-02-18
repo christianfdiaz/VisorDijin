@@ -161,7 +161,7 @@ function mapReady(map) {
         navigator.geolocation.getCurrentPosition(centerMap, locationError);
     }
     dojo.connect(map, "onClick", executeIdentifyTask);
-    identifyTask = new esri.tasks.IdentifyTask("http://gisponal.policia.gov.co/arcgis1/rest/services/Servicios_aplicaciones/SIDENCO_V1_sinmalla/MapServer");
+    identifyTask = new esri.tasks.IdentifyTask("http://srvsigmap.policia.gov.co/ArcGIS/rest/services/DIJIN/SIEDCO/MapServer");
 
     //Obtain address
     locator = new esri.tasks.Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
