@@ -16,7 +16,6 @@ dojo.require("dijit.form.Slider");
 dojo.require("esri.arcgis.utils");
 dojo.require("dijit.Dialog");
 
-
 //Global variables
 var mapa, identifyTask, identifyParams;
 var number, registry, strAddress;
@@ -47,7 +46,6 @@ function init() {
     baseMapGallery.startup();
 
     baseMapGallery.on("error", function (msg) {
-    	
         console.log("error en la galeria de mpas base: ", msg);
     });
 
@@ -149,7 +147,7 @@ function obtenerInformacionServicio() {
             }
             if (result.layerName === 'cuadrantes') {
                 numCuadrante = feature.attributes.CODIGO_SIEDCO;
-		numCuadrante1 = feature.attributes.NRO_CUADRANTE;
+				numCuadrante1 = feature.attributes.NRO_CUADRANTE;
                 strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
             }
         });
@@ -163,7 +161,7 @@ function mapReady(map) {
         navigator.geolocation.getCurrentPosition(centerMap, locationError);
     }
     dojo.connect(map, "onClick", executeIdentifyTask);
-    identifyTask = new esri.tasks.IdentifyTask("http://srvsigmap.policia.gov.co/ArcGIS/rest/services/DIJIN/SIEDCO/MapServer");
+    identifyTask = new esri.tasks.IdentifyTask("http://gisponal.policia.gov.co/arcgis1/rest/services/Servicios_aplicaciones/SIDENCO_V1_sinmalla/MapServer");
 
     //Obtain address
     locator = new esri.tasks.Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
