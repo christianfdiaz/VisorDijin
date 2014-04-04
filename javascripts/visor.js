@@ -17,6 +17,9 @@ dojo.require("dijit.form.Slider");
 dojo.require("esri.arcgis.utils");
 dojo.require("dijit.Dialog");
 
+dojo.require("dojo.promise.all");
+
+
 //Global variables
 var mapa, identifyTask, identifyParams;
 var number, registry, strAddress;
@@ -205,14 +208,50 @@ function locationError(error) {
 }
 
 //Function to get latitude, longitude, Cuadrante, DPTO, Municipio, address, etc
+
 function executeIdentifyTask(evt) {
     mapPoint = evt.mapPoint;
     latDelito = evt.mapPoint.getLatitude();
     lonDelito = evt.mapPoint.getLongitude();
-    makeMarker(lonDelito, latDelito);
+    /*makeMarker(lonDelito, latDelito);
     mapa.infoWindow.setTitle("Coordenadas");
     mapa.infoWindow.setContent("lat/lon : " + latDelito.toFixed(2) + ", " + lonDelito.toFixed(2));
-    mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));
+    mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));*/
+	
+	var qtCuadrantes = new esri.tasks.QueryTask("http://gisponal.policia.gov.co/arcgis1/rest/services/Servicios_aplicaciones/SIDENCO_V1_sinmalla/MapServer/11");
+    var qCuadrantes = new esri.tasks.Query();
+	var qtEstaciones = new esri.tasks.QueryTask("http://gisponal.policia.gov.co/arcgis1/rest/services/Servicios_aplicaciones/SIDENCO_V1_sinmalla/MapServer/9");
+    var qEstaciones = new esri.tasks.Query();
+	qEstaciones.returnGeometry = qCuadrantes.returnGeometry = false;
+	qCuadrantes.outFields = qEstaciones.outFields = ['CODIGO_SIEDCO'];
+	
+	var qGeom = new esri.geometry.Point({
+        longitude: lonDelito,
+        latitude: latDelito
+    });
+	qCuadrantes.geometry = qEstaciones.geometry = qGeom;
+	var cuad = qtCuadrantes.execute(qCuadrantes);
+    var esta = qtEstaciones.execute(qEstaciones);
+    var promises = new dojo.promise.all([cuad, esta]);
+    promises.then(function(results){
+		makeMarker(lonDelito, latDelito);
+		var codigoSiedco = "";
+		if (results[0].hasOwnProperty("features") ) {
+            if(results[0].features.length>0){
+				 codigoSiedco = "Cod SIEDCO Cuadrante: "+results[0].features[0].attributes.CODIGO_SIEDCO;
+			}
+			else if (results[1].hasOwnProperty("features") ) {
+            if(results[1].features.length>0){
+				codigoSiedco = "Cod SIEDCO Estaci&oacute;n: "+results[1].features[0].attributes.CODIGO_SIEDCO;
+			}
+          }
+          }
+        
+		mapa.infoWindow.setTitle("Coordenadas");
+		mapa.infoWindow.setContent("lat/lon : " + latDelito.toFixed(2) + ", " + lonDelito.toFixed(2)+"<br/>"+codigoSiedco);
+		mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));
+	});
+          
     /*mapPoint = evt.mapPoint;
 	identifyParams.geometry = mapPoint;
 	identifyParams.mapExtent = mapa.extent;
