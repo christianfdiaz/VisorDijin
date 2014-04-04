@@ -1,3 +1,4 @@
+//--
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -66,6 +67,7 @@ function init() {
     });
     //layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer("http://srvsigmap.policia.gov.co/ArcGIS/rest/services/DIJIN/SIEDCO/MapServer",{opacity:.70});
     //mapa.addLayer(layerCuadrantes);
+    
 
     statsLink = dojo.create("a", {
         "class": "action",
