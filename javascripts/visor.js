@@ -248,7 +248,7 @@ function executeIdentifyTask(evt) {
           }
         
 		mapa.infoWindow.setTitle("Coordenadas");
-		mapa.infoWindow.setContent("lat/lon : " + numberWithCommas(Number(latDelito.toFixed(6))) + " ; " + numberWithCommas(Number(lonDelito.toFixed(6)))+"<br/>"+codigoSiedco);
+		mapa.infoWindow.setContent("lat/lon : " + numberWithCommas(latDelito) + " ; " + numberWithCommas(lonDelito)+"<br/>"+codigoSiedco);
 		mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));
 	});
           
