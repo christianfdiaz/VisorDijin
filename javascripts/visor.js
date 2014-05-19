@@ -125,7 +125,7 @@ function init() {
         dojo.forEach(response.results, function(r) {
           var mark = new esri.Graphic(r.feature.geometry,createSymbol(markPath,markColor));
           mapa.graphics.add(mark);
-          mapa.centerAndZoom(r.feature.geometry,14);
+          mapa.centerAndZoom(r.feature.geometry,12);
         });
         
       });
