@@ -321,7 +321,7 @@ function executeIdentifyTask(evt) {
   dojo.byId('ButtonCoor').disabled= false;*/
 }
 function numberWithCommas(x) {
-    return x.toLocaleString();
+    return dojo.number.format(x,{ places: 6 });
 }
 function showAddress(evt) {
     if (evt.address) {
