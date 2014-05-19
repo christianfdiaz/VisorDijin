@@ -291,7 +291,7 @@ function executeIdentifyTask(evt) {
     	  cod_estacion = feature.attributes.CODIGO_SIEDCO;
     	  strInformacion ="&Cod_DANE="+ent_administrativa+"&Cod_Estacion="+cod_estacion+"&latitud="+latDelito+"&longitud="+lonDelito+"&direccion="+strAddress;
       }
-      else if (result.layerName === 'ADMIN_GEO.Barrios'){
+      else  if (result.layerName === 'ADMIN_GEO.Barrios'){
     	  var template = new esri.InfoTemplate("Informaci&oacute;n Barrios","Nombre: ${Nombre Barrio} <br/>" +
     			  "Latitud Delito: "+latDelito+"<br/>Longitud Delito:"+lonDelito+
     			  "<br/><br/>Los datos fueron tomados del mapa, ahora puede hacer clic en el bot&oacute;n Enviar informaci&oacute;n.");
