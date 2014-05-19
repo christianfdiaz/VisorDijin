@@ -248,7 +248,7 @@ function executeIdentifyTask(evt) {
           }
         
 		mapa.infoWindow.setTitle("Coordenadas");
-		mapa.infoWindow.setContent("lat/lon : " + latDelito.toFixed(6) + ", " + lonDelito.toFixed(6)+"<br/>"+codigoSiedco);
+		mapa.infoWindow.setContent("lat/lon : " + numberWithCommas(latDelito.toFixed(6)) + " ; " + numberWithCommas(lonDelito.toFixed(6))+"<br/>"+codigoSiedco);
 		mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));
 	});
           
@@ -320,7 +320,9 @@ function executeIdentifyTask(evt) {
   mapa.infoWindow.show(evt.mapPoint);
   dojo.byId('ButtonCoor').disabled= false;*/
 }
-
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 function showAddress(evt) {
     if (evt.address) {
         strAddress = evt.address.Address + "(+/- 10 mts)";
