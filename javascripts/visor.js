@@ -338,7 +338,7 @@ function executeIdentifyTask(evt) {
   dojo.byId('ButtonCoor').disabled= false;*/
 }
 function numberWithCommas(x) {
-    return num.toFixed(6);
+    return x.toFixed(6);
 }
 function showAddress(evt) {
     if (evt.address) {
