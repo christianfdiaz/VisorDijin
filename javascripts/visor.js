@@ -133,6 +133,7 @@ function init() {
 var dialog;
 var address;
 function procesoInformacion() {
+	console.log('Salida');
     dialog.show();
     strAddress = "La Direcci&oacute; excede 10 mts de distancia a la intersecci&oacute;n vial m&aacute;s cercana."
     locator.locationToAddress(mapPoint, 10, direccionObtenida, errorDireccionObtenida);
