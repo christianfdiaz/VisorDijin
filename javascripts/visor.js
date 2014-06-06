@@ -134,7 +134,7 @@ var dialog;
 var address;
 function procesoInformacion() {
 	console.log('Salida');
-    dialog.show();
+    //dialog.show();
     strAddress = "La Direcci&oacute; excede 10 mts de distancia a la intersecci&oacute;n vial m&aacute;s cercana."
     locator.locationToAddress(mapPoint, 10, direccionObtenida, errorDireccionObtenida);
 }
@@ -174,7 +174,7 @@ function obtenerInformacionServicio() {
                 strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
             }
         });
-        dialog.hide();
+        //dialog.hide();
         onButtonOKClick();
     });
 
