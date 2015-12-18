@@ -1,4 +1,4 @@
-//--
+ //--
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -161,7 +161,7 @@ function obtenerInformacionServicio() {
             if (result.layerName == 'Municipios') {
                 ent_administrativa = feature.attributes['Codigo Municipio'];
             }
-            if (result.layerName == 'JurisdiccionesEstaciones') {
+            if (result.layerName == 'Jurisdiccion_Estaciones') {
                 cod_estacion = feature.attributes.CODIGO_SIEDCO;
                 strInformacion = "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
             }
