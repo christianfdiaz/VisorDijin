@@ -158,17 +158,17 @@ function obtenerInformacionServicio() {
             var feature = result.feature;
             feature.attributes.layerName = result.layerName;
 
-            if (result.layerName === 'ADMIN_GEO.Municipios') {
+            if (result.layerName == 'Municipios') {
                 ent_administrativa = feature.attributes['Codigo Municipio'];
             }
-            if (result.layerName === 'ADMIN_GEO.JurisdiccionesEstaciones') {
+            if (result.layerName == 'JurisdiccionesEstaciones') {
                 cod_estacion = feature.attributes.CODIGO_SIEDCO;
                 strInformacion = "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
             }
-            if (result.layerName === 'ADMIN_GEO.Barrios') {
+            if (result.layerName == 'Barrios') {
                 barrio = feature.attributes['Nombre Barrio'];
             }
-            if (result.layerName === 'cuadrantes') {
+            if (result.layerName == 'Cuadrantes') {
                 numCuadrante = feature.attributes.CODIGO_SIEDCO;
 				numCuadrante1 = feature.attributes.NRO_CUADRANTE;
                 strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
@@ -184,7 +184,7 @@ function mapReady(map) {
         navigator.geolocation.getCurrentPosition(centerMap, locationError);
     }
     dojo.connect(map, "onClick", executeIdentifyTask);
-    identifyTask = new esri.tasks.IdentifyTask("http://gisponal.policia.gov.co/arcgis1/rest/services/Servicios_aplicaciones/SIDENCO_V1_sinmalla/MapServer");
+    identifyTask = new esri.tasks.IdentifyTask("http://sigponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer");
 
     //Obtain address
     locator = new esri.tasks.Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
@@ -270,73 +270,7 @@ function executeIdentifyTask(evt) {
 		mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));
 	});
           
-    /*mapPoint = evt.mapPoint;
-	identifyParams.geometry = mapPoint;
-	identifyParams.mapExtent = mapa.extent;
-	locator.locationToAddress(mapPoint,10,showAddress,showErrorAddress);
-	
-	var deferred = identifyTask.execute(identifyParams);
-	latDelito = evt.mapPoint.getLatitude();
-	lonDelito = evt.mapPoint.getLongitude();
-	makeMarker(lonDelito,latDelito);
-	
-	deferred.addCallback(function(response) {     
-    // response is an array of identify result objects    
-    // Let's return an array of features.
-    return dojo.map(response, function(result) {
-      var feature = result.feature;
-      feature.attributes.layerName = result.layerName;
-      
-      if(result.layerName === 'ADMIN_GEO.Departamentos'){
-    	var template = new esri.InfoTemplate("Entidad Administrativa","Nombre Departamento: ${Nombre Departamento}<br/>Cod DANE: ${Codigo Departamento}<br/>" +
-    			"<br/>Direcci&oacute;n: "+strAddress+"<br/>Latitud Delito: "+latDelito+"<br/>Longitud Delito:"+lonDelito+
-    			"<br/><br/>Los datos fueron tomados del mapa, ahora puede hacer clic en el bot&oacute;n Enviar informaci&oacute;n.");
-    	feature.setInfoTemplate(template);
-      }
-      else if(result.layerName === 'ADMIN_GEO.Municipios'){
-        var template = new esri.InfoTemplate("Entidad Administrativa","Municipio: ${Nombre Municipio}<br/>Cod DANE: ${Codigo Municipio}<br/>" +
-        		"Latitud Delito: "+latDelito+"<br/>Longitud Delito:"+lonDelito+
-        		"<br/><br/>Los datos fueron tomados del mapa, ahora puede hacer clic en el bot&oacute;n Enviar informaci&oacute;n.");
-        feature.setInfoTemplate(template);
-        ent_administrativa = feature.attributes['Codigo Municipio'];
-        
-      }
-      else if (result.layerName === 'ADMIN_GEO.JurisdiccionesEstaciones'){
-    	  var template = new esri.InfoTemplate("Informaci&oacute;n Estaci&oacute;n","Cod SIEDCO: ${CODIGO_SIEDCO} <br/> Departamento: ${NOMBRE_DPTO} <br/> " +
-    	  		"Nombre: ${ESTACION}<br/>Latitud Delito: "+latDelito+"<br/>Longitud Delito: "+lonDelito+
-    	  		"<br/><br/>Los datos fueron tomados del mapa, ahora puede hacer clic en el bot&oacute;n Enviar informaci&oacute;n.");
-    	  feature.setInfoTemplate(template);
-    	  cod_estacion = feature.attributes.CODIGO_SIEDCO;
-    	  strInformacion ="&Cod_DANE="+ent_administrativa+"&Cod_Estacion="+cod_estacion+"&latitud="+latDelito+"&longitud="+lonDelito+"&direccion="+strAddress;
-      }
-      else  if (result.layerName === 'ADMIN_GEO.Barrios'){
-    	  var template = new esri.InfoTemplate("Informaci&oacute;n Barrios","Nombre: ${Nombre Barrio} <br/>" +
-    			  "Latitud Delito: "+latDelito+"<br/>Longitud Delito:"+lonDelito+
-    			  "<br/><br/>Los datos fueron tomados del mapa, ahora puede hacer clic en el bot&oacute;n Enviar informaci&oacute;n.");
-    	  feature.setInfoTemplate(template);
-    	  barrio = feature.attributes['Nombre Barrio'];
-      }
-      else if (result.layerName === 'cuadrantes'){
-    	  var template = new esri.InfoTemplate("Informaci&oacute;n Cuadrante","N&uacute;mero: ${NRO_CUADRANTE} <br/>" +
-    	  		"C&oacute;digo_SIEDCO: ${CODIGO_SIEDCO}<br/>Latitud Delito: "+latDelito+"<br/>Longitud Delito: "+lonDelito+
-    	  		"<br/><br/>Los datos fueron tomados del mapa, ahora puede hacer clic en el bot&oacute;n \"Enviar informaci&oacute;n.\"");
-    	  feature.setInfoTemplate(template);
-    	  numCuadrante = feature.attributes.CODIGO_SIEDCO;
-    	  strInformacion ="&Cod_DANE="+ent_administrativa+"&Cod_Estacion="+cod_estacion+"&Barrio="+barrio+"&Cuadrante="+numCuadrante+"&latitud="+latDelito+"&longitud="+lonDelito+"&direccion="+strAddress;
-      }
-      return feature;
-    });
-    
-  });
-
-  // InfoWindow expects an array of features from each deferred
-  // object that you pass. If the response from the task execution 
-  // above is not an array of features, then you need to add a callback
-  // like the one above to post-process the response and return an
-  // array of features.
-  mapa.infoWindow.setFeatures([ deferred ]);
-  mapa.infoWindow.show(evt.mapPoint);
-  dojo.byId('ButtonCoor').disabled= false;*/
+   
 }
 function numberWithCommas(x) {
     return x.toFixed(6);
