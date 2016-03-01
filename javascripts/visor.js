@@ -235,10 +235,9 @@ function executeIdentifyTask(evt) {
     mapa.infoWindow.setTitle("Coordenadas");
     mapa.infoWindow.setContent("lat/lon : " + latDelito.toFixed(2) + ", " + lonDelito.toFixed(2));
     mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));*/
-	
-	var qtCuadrantes = new esri.tasks.QueryTask("http://gisponal.policia.gov.co/arcgis1/rest/services/Servicios_aplicaciones/SIDENCO_V1_sinmalla/MapServer/11");
+        var qtCuadrantes = new esri.tasks.QueryTask("http://sigponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/11");	
     var qCuadrantes = new esri.tasks.Query();
-	var qtEstaciones = new esri.tasks.QueryTask("http://gisponal.policia.gov.co/arcgis1/rest/services/Servicios_aplicaciones/SIDENCO_V1_sinmalla/MapServer/9");
+	var qtEstaciones = new esri.tasks.QueryTask("http://sigponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/9");
     var qEstaciones = new esri.tasks.Query();
 	qEstaciones.returnGeometry = qCuadrantes.returnGeometry = false;
 	qCuadrantes.outFields = qEstaciones.outFields = ['CODIGO_SIEDCO'];
