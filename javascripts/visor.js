@@ -1,7 +1,4 @@
- //-- 07/06/2016
-            }
-            if (result.layerName == 'CUADRANTES_RURALES') {
-                cua_rural = feature.attributes['SIEDCO'];
+//-- 07/06/2016
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -170,6 +167,9 @@ function obtenerInformacionServicio() {
             }
             if (result.layerName == 'Barrios') {
                 barrio = feature.attributes['Nombre Barrio'];
+            }
+            if (result.layerName == 'CUADRANTES_RURALES') {
+                cua_rural = feature.attributes['SIEDCO'];
             }
 			if (result.layerName == 'Cuadrantes') {
                 numCuadrante = feature.attributes.CODIGO_SIEDCO;
@@ -386,4 +386,3 @@ function onButtonOKClick() {
 
 //Function to load the visor
 dojo.ready(init);
-
