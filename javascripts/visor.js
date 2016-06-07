@@ -1,4 +1,7 @@
- //--
+ //-- 07/06/2016
+            }
+            if (result.layerName == 'CUADRANTES_RURALES') {
+                cua_rural = feature.attributes['SIEDCO'];
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -24,7 +27,7 @@ dojo.require("dojo.promise.all");
 var mapa, identifyTask, identifyParams;
 var number, registry, strAddress;
 var locator, templateLocator;
-var latDelito, lonDelito, numCuadrante, ent_administrativa, barrio, cod_estacion, cod_cai;
+var latDelito, lonDelito, numCuadrante,numCuadrante1, ent_administrativa, barrio, cod_estacion, cod_cai, cua_rural;
 var scaleBar;
 var layerCuadrantes;
 var geocodificador;
@@ -168,11 +171,11 @@ function obtenerInformacionServicio() {
             if (result.layerName == 'Barrios') {
                 barrio = feature.attributes['Nombre Barrio'];
             }
-            if (result.layerName == 'Cuadrantes') {
+			if (result.layerName == 'Cuadrantes') {
                 numCuadrante = feature.attributes.CODIGO_SIEDCO;
 				numCuadrante1 = feature.attributes.NRO_CUADRANTE;
-                strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
-            }
+			}
+			strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&SiedcoCua_Rural=" + cua_rural + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
         });
         //dialog.hide();
         onButtonOKClick();
@@ -191,7 +194,7 @@ function mapReady(map) {
     identifyParams = new esri.tasks.IdentifyParameters();
     identifyParams.tolerance = 3;
     identifyParams.returnGeometry = false;
-    identifyParams.layerIds = ["1,3,9,4,11"];
+    identifyParams.layerIds = ["1,3,9,4,11,12"];
     identifyParams.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_ALL;
     identifyParams.width = map.width;
     identifyParams.height = map.height;
@@ -259,7 +262,7 @@ function executeIdentifyTask(evt) {
 			}
 			else if (results[1].hasOwnProperty("features") ) {
             if(results[1].features.length>0){
-				codigoSiedco = "Cod SIEDCO Estaci&oacute;n: "+results[1].features[0].attributes.CODIGO_SIEDCO;
+				codigoSiedco = "Cod SIEDCO Cuadrante Vial: "+results[1].features[0].attributes.CODIGO_SIEDCO;
 			}
           }
           }
@@ -383,3 +386,4 @@ function onButtonOKClick() {
 
 //Function to load the visor
 dojo.ready(init);
+
