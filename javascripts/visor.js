@@ -262,7 +262,7 @@ function executeIdentifyTask(evt) {
 			}
 			else if (results[1].hasOwnProperty("features") ) {
             if(results[1].features.length>0){
-				codigoSiedco = "Cod SIEDCO Cuadrante Vial: "+results[1].features[0].attributes.CODIGO_SIEDCO;
+				codigoSiedco = "Cod SIEDCO Estación: "+results[1].features[0].attributes.CODIGO_SIEDCO;
 			}
           }
           }
