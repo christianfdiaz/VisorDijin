@@ -1,7 +1,4 @@
-//--06-07-2016
-
-
-
+ //-- 07/07/2016
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -27,7 +24,7 @@ dojo.require("dojo.promise.all");
 var mapa, identifyTask, identifyParams;
 var number, registry, strAddress;
 var locator, templateLocator;
-var latDelito, lonDelito, numCuadrante, ent_administrativa, barrio, cod_estacion, cod_cai;
+var latDelito, lonDelito, numCuadrante,numCuadrante1, ent_administrativa, barrio, cod_estacion, cod_cai, cua_rural;
 var scaleBar;
 var layerCuadrantes;
 var geocodificador;
@@ -165,17 +162,40 @@ function obtenerInformacionServicio() {
                 ent_administrativa = feature.attributes['Codigo Municipio'];
             }
             if (result.layerName == 'Jurisdiccion_Estaciones') {
-                cod_estacion = feature.attributes.CODIGO_SIEDCO;
+                cod_estacion = feature.attributes.CODIGO_SIEDCO;				
                 strInformacion = "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
             }
             if (result.layerName == 'Barrios') {
                 barrio = feature.attributes['Nombre Barrio'];
             }
-            if (result.layerName == 'Cuadrantes') {
+            if (result.layerName == 'CUADRANTES_RURALES') {
+                cua_rural = feature.attributes['SIEDCO'];
+            }
+			if (result.layerName == 'Cuadrantes') {
                 numCuadrante = feature.attributes.CODIGO_SIEDCO;
 				numCuadrante1 = feature.attributes.NRO_CUADRANTE;
-                strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
-            }
+			}
+			strInformacion = "";
+			if(numCuadrante1!=undefined)
+				strInformacion += "&NRO_CUADRANTE=" + numCuadrante1;
+			if(ent_administrativa!=undefined)
+				strInformacion += "&Cod_DANE=" + ent_administrativa;
+			if(cod_estacion!=undefined)
+				strInformacion += "&Cod_Estacion=" + cod_estacion;
+			if(barrio!=undefined)
+				strInformacion += "&Barrio=" + barrio;
+			if(numCuadrante!=undefined)
+				strInformacion += "&Cuadrante=" + numCuadrante ;
+			if(latDelito!=undefined)
+				strInformacion += "&latitud=" + latDelito;
+			if(lonDelito!=undefined)
+				strInformacion += "&longitud=" + lonDelito;
+			if(strAddress!=undefined)
+				strInformacion += "&direccion=" + strAddress;
+			if(cua_rural!=undefined)
+				strInformacion += "&SiedcoCua_Rural=" + cua_rural;
+			
+			//strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress + "&SiedcoCua_Rural=" + cua_rural;
         });
         //dialog.hide();
         onButtonOKClick();
@@ -187,14 +207,14 @@ function mapReady(map) {
         navigator.geolocation.getCurrentPosition(centerMap, locationError);
     }
     dojo.connect(map, "onClick", executeIdentifyTask);
-    identifyTask = new esri.tasks.IdentifyTask("http://sigponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer");
+    identifyTask = new esri.tasks.IdentifyTask("https://gisponal.policia.gov.co:444/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer");
 
     //Obtain address
     locator = new esri.tasks.Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
     identifyParams = new esri.tasks.IdentifyParameters();
     identifyParams.tolerance = 3;
     identifyParams.returnGeometry = false;
-    identifyParams.layerIds = ["1,3,9,4,11"];
+    identifyParams.layerIds = ["1,3,9,4,11,12"];
     identifyParams.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_ALL;
     identifyParams.width = map.width;
     identifyParams.height = map.height;
@@ -238,9 +258,9 @@ function executeIdentifyTask(evt) {
     mapa.infoWindow.setTitle("Coordenadas");
     mapa.infoWindow.setContent("lat/lon : " + latDelito.toFixed(2) + ", " + lonDelito.toFixed(2));
     mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));*/
-        var qtCuadrantes = new esri.tasks.QueryTask("http://sigponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/11");	
+        var qtCuadrantes = new esri.tasks.QueryTask("https://gisponal.policia.gov.co:444/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/11");	
     var qCuadrantes = new esri.tasks.Query();
-	var qtEstaciones = new esri.tasks.QueryTask("http://sigponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/9");
+	var qtEstaciones = new esri.tasks.QueryTask("https://gisponal.policia.gov.co:444/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/9");
     var qEstaciones = new esri.tasks.Query();
 	qEstaciones.returnGeometry = qCuadrantes.returnGeometry = false;
 	qCuadrantes.outFields = qEstaciones.outFields = ['CODIGO_SIEDCO'];
@@ -262,7 +282,7 @@ function executeIdentifyTask(evt) {
 			}
 			else if (results[1].hasOwnProperty("features") ) {
             if(results[1].features.length>0){
-				codigoSiedco = "Cod SIEDCO Estaci&oacute;n: "+results[1].features[0].attributes.CODIGO_SIEDCO;
+				codigoSiedco = "Cod SIEDCO Estación: "+results[1].features[0].attributes.CODIGO_SIEDCO;
 			}
           }
           }
