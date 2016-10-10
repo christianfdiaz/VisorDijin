@@ -124,9 +124,7 @@ function init() {
 
         dojo.forEach(response.results, function(r) {
 	var pgeo = esri.geometry.webMercatorToGeographic(r.feature.geometry);	
-          var mark = new esri.Graphic(pgeo,createSymbol(markPath,markColor));
-          mapa.graphics.add(mark);
-          mapa.centerAndZoom(pgeo,10);
+          makeMarker(pgeo.x, pgeo.y)
         });
         
       });
