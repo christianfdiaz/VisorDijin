@@ -121,10 +121,16 @@ function init() {
 		"1.873c0.598,0.574,1.174,0.803,1.725,0.496C22.602,21.541,22.443,18.912,21.021,16.349zM15.808,13.757c2.362,0,4.278-1.916,4.278-" +
 		"4.279s-1.916-4.279-4.278-4.279c-2.363,0-4.28,1.916-4.28,4.279S13.445,13.757,15.808,13.757z";
     	var markColor = "0a9242";    	
-
+	// el servicio responde con varios features, se ajusta para que solo pinte el primero
+        var countF = 0;
         dojo.forEach(response.results, function(r) {
-	var pgeo = esri.geometry.webMercatorToGeographic(r.feature.geometry);	
-          makeMarker(pgeo.x, pgeo.y)
+			if(countF < 1){
+			var pgeo = esri.geometry.webMercatorToGeographic(r.feature.geometry);	
+          makeMarker(pgeo.x, pgeo.y);
+		  mapa.centerAndZoom(r.feature.geometry);
+		  countF ++;
+		  }
+		  
         });
         
       });
