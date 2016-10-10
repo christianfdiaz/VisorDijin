@@ -123,9 +123,10 @@ function init() {
     	var markColor = "0a9242";    	
 
         dojo.forEach(response.results, function(r) {
-          var mark = new esri.Graphic(r.feature.geometry,createSymbol(markPath,markColor));
+	var pgeo = esri.geometry.webMercatorToGeographic(r.feature.geometry);	
+          var mark = new esri.Graphic(pgeo,createSymbol(markPath,markColor));
           mapa.graphics.add(mark);
-          mapa.centerAndZoom(r.feature.geometry,10);
+          mapa.centerAndZoom(pgeo,10);
         });
         
       });
