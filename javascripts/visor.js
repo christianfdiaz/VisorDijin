@@ -1,4 +1,4 @@
- //-- 23/08/2016
+ //-- 10/02/2017
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -212,7 +212,7 @@ function mapReady(map) {
         navigator.geolocation.getCurrentPosition(centerMap, locationError);
     }
     dojo.connect(map, "onClick", executeIdentifyTask);
-    identifyTask = new esri.tasks.IdentifyTask("http://srvsigponalapp2:6080/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer");
+    identifyTask = new esri.tasks.IdentifyTask("https://srvgis1.policia.gov.co:6443/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer");
 
     //Obtain address
     locator = new esri.tasks.Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
@@ -263,9 +263,9 @@ function executeIdentifyTask(evt) {
     mapa.infoWindow.setTitle("Coordenadas");
     mapa.infoWindow.setContent("lat/lon : " + latDelito.toFixed(2) + ", " + lonDelito.toFixed(2));
     mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));*/
-        var qtCuadrantes = new esri.tasks.QueryTask("http://srvsigponalapp2:6080/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/11");	
+        var qtCuadrantes = new esri.tasks.QueryTask("https://srvgis1.policia.gov.co:6443/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/11");	
     var qCuadrantes = new esri.tasks.Query();
-	var qtEstaciones = new esri.tasks.QueryTask("http://srvsigponalapp2:6080/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/9");
+	var qtEstaciones = new esri.tasks.QueryTask("https://srvgis1.policia.gov.co:6443/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/9");
     var qEstaciones = new esri.tasks.Query();
 	qEstaciones.returnGeometry = qCuadrantes.returnGeometry = false;
 	qCuadrantes.outFields = qEstaciones.outFields = ['CODIGO_SIEDCO'];
