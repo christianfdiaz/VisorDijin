@@ -1,4 +1,4 @@
- //-- 10/02/2017
+//-- 07/06/2016
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -27,6 +27,8 @@ var locator, templateLocator;
 var latDelito, lonDelito, numCuadrante,numCuadrante1, ent_administrativa, barrio, cod_estacion, cod_cai, cua_rural;
 var scaleBar;
 var layerCuadrantes;
+var layermallavial;
+var layercuadvial;
 var geocodificador;
 var strInformacion;
 var mapPoint;
@@ -59,8 +61,8 @@ function init() {
     scaleBar = new esri.dijit.Scalebar({
         map: mapa,
         scalebarUnit: "metric"
-    });
-    //esri.arcgis.utils.getItem("4778fee6371d4e83a22786029f30c7e1").then(function (response) {
+    });   
+	//esri.arcgis.utils.getItem("4778fee6371d4e83a22786029f30c7e1").then(function (response) {
     esri.arcgis.utils.getItem("a3947b2c7a2c4495a41df575250facb9").then(function (response) {
         dojo.map(response.itemData.operationalLayers, function (item) {
             var layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer(item.url, { opacity: item.opacity });
@@ -68,9 +70,15 @@ function init() {
         });
         //console.log(response);
     });
-    //layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer("http://srvsigmap.policia.gov.co/ArcGIS/rest/services/DIJIN/SIEDCO/MapServer",{opacity:.70});
-    //mapa.addLayer(layerCuadrantes);
+    layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/CUADRANTES/MapServer",{opacity:.70});
+    mapa.addLayer(layerCuadrantes);
     
+	layermallavial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/MALLA_VIAL/MapServer",{opacity:.70});
+    mapa.addLayer(layermallavial);
+    
+	layercuadvial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/CUADRANTES_RURAL_DITRA/MapServer",{opacity:.70});
+    mapa.addLayer(layercuadvial);
+	
 
     statsLink = dojo.create("a", {
         "class": "action",
@@ -121,16 +129,11 @@ function init() {
 		"1.873c0.598,0.574,1.174,0.803,1.725,0.496C22.602,21.541,22.443,18.912,21.021,16.349zM15.808,13.757c2.362,0,4.278-1.916,4.278-" +
 		"4.279s-1.916-4.279-4.278-4.279c-2.363,0-4.28,1.916-4.28,4.279S13.445,13.757,15.808,13.757z";
     	var markColor = "0a9242";    	
-	// el servicio responde con varios features, se ajusta para que solo pinte el primero
-        var countF = 0;
+
         dojo.forEach(response.results, function(r) {
-			if(countF < 1){
-			var pgeo = esri.geometry.webMercatorToGeographic(r.feature.geometry);	
-          makeMarker(pgeo.x, pgeo.y);
-		  mapa.centerAndZoom(r.feature.geometry);
-		  countF ++;
-		  }
-		  
+          var mark = new esri.Graphic(r.feature.geometry,createSymbol(markPath,markColor));
+          mapa.graphics.add(mark);
+          mapa.centerAndZoom(r.feature.geometry,10);
         });
         
       });
