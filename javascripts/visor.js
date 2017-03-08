@@ -228,7 +228,7 @@ function mapReady(map) {
     identifyParams = new esri.tasks.IdentifyParameters();
     identifyParams.tolerance = 3;
     identifyParams.returnGeometry = false;
-    identifyParams.layerIds = ["1,3,9,4,11,12,"];
+    identifyParams.layerIds = ["1,3,9,4,11,12"];
     identifyParams.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_ALL;
     identifyParams.width = map.width;
     identifyParams.height = map.height;
