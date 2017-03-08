@@ -1,4 +1,4 @@
-//-- 07/06/2016
+//-- 08/03/2017
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -24,7 +24,7 @@ dojo.require("dojo.promise.all");
 var mapa, identifyTask, identifyParams;
 var number, registry, strAddress;
 var locator, templateLocator;
-var latDelito, lonDelito, numCuadrante,numCuadrante1, ent_administrativa, barrio, cod_estacion, cod_cai, cua_rural;
+var latDelito, lonDelito, numCuadrante,numCuadrante1, ent_administrativa, barrio, cod_estacion, cod_cai, cua_rural, nom_municipio;
 var scaleBar;
 var layerCuadrantes;
 var layermallavial;
@@ -168,10 +168,11 @@ function obtenerInformacionServicio() {
 
             if (result.layerName == 'Municipios') {
                 ent_administrativa = feature.attributes['Codigo Municipio'];
+				nom_municipio = feature.attributes['Nombre Municipio'];
             }
             if (result.layerName == 'Jurisdiccion_Estaciones') {
                 cod_estacion = feature.attributes.CODIGO_SIEDCO;				
-                strInformacion = "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress;
+                strInformacion = "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress + "&nombre=" + nom_municipio;
             }
             if (result.layerName == 'Barrios') {
                 barrio = feature.attributes['Nombre Barrio'];
@@ -179,10 +180,12 @@ function obtenerInformacionServicio() {
             if (result.layerName == 'CUADRANTES_RURALES') {
                 cua_rural = feature.attributes['SIEDCO'];
             }
+			
 			if (result.layerName == 'Cuadrantes') {
                 numCuadrante = feature.attributes.CODIGO_SIEDCO;
 				numCuadrante1 = feature.attributes.NRO_CUADRANTE;
 			}
+			
 			strInformacion = "";
 			if(numCuadrante1!=undefined)
 				strInformacion += "&NRO_CUADRANTE=" + numCuadrante1;
@@ -202,6 +205,9 @@ function obtenerInformacionServicio() {
 				strInformacion += "&direccion=" + strAddress;
 			if(cua_rural!=undefined)
 				strInformacion += "&SiedcoCua_Rural=" + cua_rural;
+			if(nom_municipio!=undefined)
+				strInformacion += "&nom_municipio=" + nom_municipio;
+		
 			
 			//strInformacion = "&NRO_CUADRANTE=" + numCuadrante1 + "&Cod_DANE=" + ent_administrativa + "&Cod_Estacion=" + cod_estacion + "&Barrio=" + barrio + "&Cuadrante=" + numCuadrante + "&latitud=" + latDelito + "&longitud=" + lonDelito + "&direccion=" + strAddress + "&SiedcoCua_Rural=" + cua_rural;
         });
@@ -222,7 +228,7 @@ function mapReady(map) {
     identifyParams = new esri.tasks.IdentifyParameters();
     identifyParams.tolerance = 3;
     identifyParams.returnGeometry = false;
-    identifyParams.layerIds = ["1,3,9,4,11,12"];
+    identifyParams.layerIds = ["1,3,9,4,11,12,"];
     identifyParams.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_ALL;
     identifyParams.width = map.width;
     identifyParams.height = map.height;
@@ -414,3 +420,7 @@ function onButtonOKClick() {
 
 //Function to load the visor
 dojo.ready(init);
+
+
+
+
