@@ -1,4 +1,4 @@
-//-- 08/03/2017
+ //-- 27/03/2017
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -70,13 +70,13 @@ function init() {
         });
         //console.log(response);
     });
-    layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/CUADRANTES/MapServer",{opacity:.70});
+    layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer("https://gisponal.policia.gov.co/webadaptor/rest/services/CAPAS/CUADRANTES/MapServer",{opacity:.70});
     mapa.addLayer(layerCuadrantes);
     
-	layermallavial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/MALLA_VIAL/MapServer",{opacity:.70});
+	layermallavial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gisponal.policia.gov.co/webadaptor/rest/services/CAPAS/MALLA_VIAL/MapServer",{opacity:.70});
     mapa.addLayer(layermallavial);
     
-	layercuadvial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/CUADRANTES_RURAL_DITRA/MapServer",{opacity:.70});
+	layercuadvial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gisponal.policia.gov.co/webadaptor/rest/services/CAPAS/CUADRANTES_RURAL_DITRA/MapServer",{opacity:.70});
     mapa.addLayer(layercuadvial);
 	
 
@@ -221,7 +221,7 @@ function mapReady(map) {
         navigator.geolocation.getCurrentPosition(centerMap, locationError);
     }
     dojo.connect(map, "onClick", executeIdentifyTask);
-    identifyTask = new esri.tasks.IdentifyTask("https://gis.policia.gov.co:6443/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer");
+    identifyTask = new esri.tasks.IdentifyTask("https://gisponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer");
 
     //Obtain address
     locator = new esri.tasks.Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
@@ -272,9 +272,9 @@ function executeIdentifyTask(evt) {
     mapa.infoWindow.setTitle("Coordenadas");
     mapa.infoWindow.setContent("lat/lon : " + latDelito.toFixed(2) + ", " + lonDelito.toFixed(2));
     mapa.infoWindow.show(evt.mapPoint, mapa.getInfoWindowAnchor(evt.screenPoint));*/
-        var qtCuadrantes = new esri.tasks.QueryTask("https://gis.policia.gov.co:6443/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/11");	
+        var qtCuadrantes = new esri.tasks.QueryTask("https://gisponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/11");	
     var qCuadrantes = new esri.tasks.Query();
-	var qtEstaciones = new esri.tasks.QueryTask("https://gis.policia.gov.co:6443/arcgis/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/9");
+	var qtEstaciones = new esri.tasks.QueryTask("https://gisponal.policia.gov.co/webadaptor/rest/services/DIJIN/SIDENCO_SinMalla/MapServer/9");
     var qEstaciones = new esri.tasks.Query();
 	qEstaciones.returnGeometry = qCuadrantes.returnGeometry = false;
 	qCuadrantes.outFields = qEstaciones.outFields = ['CODIGO_SIEDCO'];
@@ -420,6 +420,9 @@ function onButtonOKClick() {
 
 //Function to load the visor
 dojo.ready(init);
+
+
+
 
 
 
