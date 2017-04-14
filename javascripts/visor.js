@@ -38,7 +38,7 @@ function init() {
 
     //setup the map
     mapa = new esri.Map("divMap", {
-        basemap: "streets",
+        basemap: "osm",
         center: [-73.461, 4.579],
         zoom: 5
 
