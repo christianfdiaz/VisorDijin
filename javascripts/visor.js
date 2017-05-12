@@ -27,6 +27,7 @@ var locator, templateLocator;
 var latDelito, lonDelito, numCuadrante,numCuadrante1, ent_administrativa, barrio, cod_estacion, cod_cai, cua_rural, nom_municipio;
 var scaleBar;
 var layerCuadrantes;
+var layerEstaciones
 var layermallavial;
 var layercuadvial;
 var geocodificador;
@@ -72,7 +73,10 @@ function init() {
     });
     layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/CUADRANTES/MapServer",{opacity:.70});
     mapa.addLayer(layerCuadrantes);
-    
+
+    layerEstaciones = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/ESTACIONES/MapServer",{opacity:.70});
+    mapa.addLayer(layerEstaciones);
+
 	layermallavial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/MALLA_VIAL/MapServer",{opacity:.70});
     mapa.addLayer(layermallavial);
     
