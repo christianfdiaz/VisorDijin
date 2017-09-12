@@ -1,4 +1,4 @@
-//-- 09/04/2017
+//-- 12/09/2017
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
