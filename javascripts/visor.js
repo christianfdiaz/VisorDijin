@@ -1,4 +1,4 @@
-//-- 12/09/2017
+//-- 13/09/2017
 dojo.require("esri.map");
 dojo.require("esri.geometry");
 dojo.require("esri.dijit.Scalebar");
@@ -77,8 +77,8 @@ function init() {
 	layermallavial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/MALLA_VIAL/MapServer",{opacity:.70});
     mapa.addLayer(layermallavial);
     
-    //layercuadvial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/CUADRANTES_RURAL_DITRA/MapServer",{opacity:.70});
-    //mapa.addLayer(layercuadvial);
+    /*layercuadvial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/CUADRANTES_RURAL_DITRA/MapServer",{opacity:.70});
+    mapa.addLayer(layercuadvial);*/
 	
 
     statsLink = dojo.create("a", {
@@ -421,11 +421,4 @@ function onButtonOKClick() {
 
 //Function to load the visor
 dojo.ready(init);
-
-
-
-
-
-
-
 
