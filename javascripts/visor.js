@@ -74,7 +74,7 @@ function init() {
     layerCuadrantes = new esri.layers.ArcGISDynamicMapServiceLayer("https://gisponal.policia.gov.co/arcgis/rest/services/CAPAS/CUADRANTES/MapServer",{opacity:.70});
     mapa.addLayer(layerCuadrantes);
 
-	layermallavial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/MALLA_VIAL/MapServer",{opacity:.70});
+	layermallavial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gisponal.policia.gov.co/arcgis/rest/services/CAPAS/MALLA_VIAL/MapServer",{opacity:.70});
     mapa.addLayer(layermallavial);
     
     /*layercuadvial = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.policia.gov.co:6443/arcgis/rest/services/CAPAS/CUADRANTES_RURAL_DITRA/MapServer",{opacity:.70});
